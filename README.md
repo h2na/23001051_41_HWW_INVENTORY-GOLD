@@ -22,10 +22,9 @@ The Stock Inventory Management System is a comprehensive software solution aimed
 7. **Scalability:** The system is designed to scale alongside the business, accommodating growth in inventory volume and expanding operational requirements.
 
 **Technologies:**
-- Backend: Could be built using languages like Python, Java, or Node.js, with databases such as MySQL or MongoDB.
+- Backend: Could be built using environment nodejs  package like Expressjs, morgan, knex, pg, handlebars with databases such as Postgres.
 - Frontend: HTML5, CSS3, JavaScript, and frameworks like React or Angular for the user interface.
-- APIs: Integration with external systems may require the use of RESTful APIs or other integration protocols.
-- Cloud Hosting: Utilizing cloud services like AWS, Azure, or Google Cloud for scalability and reliability.
+- APIs: Integration with systems may require the use of RESTful APIs or other integration protocols.
 
 **Benefits:**
 - Improved Inventory Accuracy: Minimizes stockouts, overstock situations, and discrepancies.

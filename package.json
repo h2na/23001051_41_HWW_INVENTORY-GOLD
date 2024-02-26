@@ -1,0 +1,23 @@
+{
+  "name": "23001051_41_hww_inventory-gold",
+  "version": "1.0.0",
+  "description": "challange gold",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --trace-warnings index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "23001051_41_hww_inventory-gold"
+  },
+  "author": "heru winda winarko",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "handlebars": "^4.7.8",
+    "knex": "^3.1.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.11.3"
+  }
+}
