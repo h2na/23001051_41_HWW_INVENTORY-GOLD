@@ -1,11 +1,5 @@
 find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
 
-
-# mac
-
-.DS_Store
-
-
 # npm
 node_modules
 package-lock.json
