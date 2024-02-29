@@ -1,0 +1,53 @@
+
+    <html class="en" lang="">
+
+    <head>
+      <title>HOME</title>
+         <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      {{!-- <link rel="apple-touch-icon" href="apple-touch-icon.png"> --}}
+      <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+      </head>
+
+    <body>
+   <script src="/bootstrap/js/bootstrap.min.js"></script> 
+  <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    ></script>
+      <!--[if lt IE 8]>
+                <p class="browserupgrade">You are using an 
+    <strong>outdated</strong> browser. Please <a 
+    href="http://browsehappy.com/">upgrade your browser</a> to improve your 
+    experience.</p>
+            <![endif]-->
+      <div class="container">
+        <div class="header clearfix">
+          <nav>
+            <ul class="nav nav-pills float-right">
+              <li class="nav-item">
+                <a class="nav-link" href="/">Home <span class="sr-only">     (current)</span></a>
+              </li>
+              {{!-- {{#if isAuthenticated}} --}}
+              <li class="nav-item">
+                <a class="nav-link" href="/data">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
+              {{!-- {{else}} --}}
+              <li class="nav-item">
+                <a class="nav-link" href="/register">Register</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+            {{!-- {{/if}} --}}
+            </ul>
+          </nav>
+          <h3 class="text-muted">Project name</h3>
+        </div>
+        </div>
+        </body>
+    </html>
