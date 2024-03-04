@@ -6,14 +6,14 @@ const app = express();
 // import db 
 const db = require('./db.js')
 
-const morgan = require('morgan');
 
 // parsing middleware
 
-// app.use(express.urlencoded({ extended: false}));
+app.use(express.urlencoded({ extended: false}));
 // body parse json 
 app.use(express.json());
 
+const morgan = require('morgan');
 //static files
 // app.use(express.static('public'));
 
@@ -31,53 +31,151 @@ app.use(morgan('dev'));
 
 // api 
 // method GET 
-
-app.get('/', async (req, res) => {
-    return res.render('index')
-})
-app.get('/data', async (req, res) => {
-    return res.render('data')
-})
-// app.get('/api/cek', async (req, res) => {
+// app.get('/api/management', async (req, res) => {
     
-//     const msUser = await db('msUser').select('*');
-//     await db('msUser').select('*')
+//     const msUser = await db('customer').select('*');
 
-//     // console.log(msUser)
-    
-//     // return res.json({
-//     //     data: msUser
-//     // })
+//     console.log(msUser)
 //     return res.render({
 //       data:msUser
 //     })
     
+
 // })
 
-// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//     var err = new Error('Not Found');
-//     err.status = 404;
-//     next(err);
-//   });
-  
-//   // error handler
-//   app.use(function(err, req, res, next) {
-//     // set locals, only providing error in development
-//     res.locals.message = err.message;
-//     res.locals.error = req.app.get('env') === 'development' ? err : {};
-  
-//     // render the error page
-//     res.status(err.status || 500);
-//     res.render('error');
-//   });
-  
 
-// const logger = (req, res, next) => {
-//     console.log(`${req.method} ${req.url}`)
-//     next();
-// }
+// method GET id 
+app.get("/api/customer/:id", async (req, res) => {
+    const { id } = req.params;
+    const data = await db("customer")
+    .select("*")
+    .where({
+        id: id,
+    })
+    .first();
+    console.log(data)
+    return res.render('put-customer',{ ds: data });
+  });
+  
+ 
+  // endpoint PUT /karyawan/:id
+  app.put("/api/customer/update/:id", async (req, res) => {
+    // ambil id dari params
+    const { id } = req.params;
+    const mg = await db("customer")
+      .where({
+        id: id,
+      })
+      .update({
+        customer: req.customer,
+        phone: req.phone,
+        address: req.address,
+      });
+      return res.redirect('home')
+  });
+  
+  // endpoint DELETE /karyawan/:id
+  app.delete("/api/customer/del/:id", async (req, res) => {
+    const { id } = req.params;
+    (await db("customer").where({
+      id: id,
+    })) - del();
+    return res.redirect('home')
+  });
+  
+// start view 
+app.get('/home', async (req, res) => {
+    const msUser = await db('customer').select('*');
+    return res.render('home',{
+        data:msUser
+    })
+    
+})
+// method POST /karyawan/:id
+app.post('/api/customer', async (req, res) => {
+   console.log(req.body)
+   // ambil data dari body
+   // insert data Ke database
+   const mg = await db("customer").insert({
+       customer: req.body.customer,
+       phone: req.body.phone,
+       address: req.body.address,
+     })
+     .returning(["id"]);
+    //  if (mg){
+         return res.redirect('home')
+    //  }
+ });
+ 
+app.get("/api/customer/:id", async (req, res) => {
+    const { id } = req.params;
+    const data = await db("customer")
+    .select("*")
+    .where({
+        id: id,
+    })
+    .first();
+    return res.render({ ds: data });
+  });
+  
+ 
+  // endpoint PUT /karyawan/:id
+  app.put("/api/customer/:id", async (req, res) => {
+    // ambil id dari params
+    const { id } = req.params;
+    // update data karyawan
+    const mg = await db("customer")
+      .where({
+        id: id,
+      })
+      .update({
+        customer: req.customer,
+        phone: req.phone,
+        address: req.address,
+      });
+      if (mg){
+        return res.render('/home')
+        // return res.render('/home',{alert:"new customer added successfully"})
+    }
+  });
+  
+  // endpoint DELETE /karyawan/:id
+  app.delete("/api/customer/:id", async (req, res) => {
 
+    // console.log
+    // ambil id dari params
+    const { id } = req.params;
+    // hapus data Karyawan
+    (await db("customer").where({
+      id: id,
+    })) - del();
+    return res.render('home')
+  });
+  
+// start view 
+app.get('/home', async (req, res) => {
+    const msUser = await db('customer').select('*');
+    return res.render('home',{
+        data:msUser
+    })
+    
+})
+// method POST /karyawan/:id
+app.post('/api/customer', async (req, res) => {
+   console.log(req.body)
+   // ambil data dari body
+   // insert data Ke database
+   const mg = await db("customer").insert({
+       customer: req.body.customer,
+       phone: req.body.phone,
+       address: req.body.address,
+     })
+     .returning(["id"]);
+    //  if (mg){
+         return res.redirect('/home')
+    //  }
+ });
+ 
 // app.use(logger)
 
 // listen server 

@@ -1,0 +1,162 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    {{! <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    ></script>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <script src="/bootstrap/js/bootstrap.min.js"></script> }}
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  </head>
+  <body>
+
+    <div class="text-center">
+	<!-- Button HTML (to Trigger Modal) -->
+
+
+{{!-- Modal toast --}}
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+     <i class="fa fa-check-circle text-success" aria-hidden="true"></i>&emsp;
+      <strong class="me-auto mr-2">Success add new</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+<!-- Modal HTML -->
+<!-- Modal POST-->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">New customer</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/api/customer"  method="POST" >
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingName" placeholder="name" name="customer">
+          <label for="floatingName">Customer</label>
+        </div>
+        <div class="form-floating mb-3" >
+          <input type="text" class="form-control" id="floatingPhone" placeholder="phone number" name="phone">
+          <label for="floatingPhone">Phone</label>
+        </div>
+        <div class="form-floating mb-3" >
+          <input type="text" class="form-control" id="floatingAddress" placeholder="address" name="address" style="height: 200px;">
+          <label for="floatingAddress">Address</label>
+        </div>
+          <button id="liveToastBtn" type="submit" value="Submit"  class="btn btn-primary">New</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal DELETE-->
+<div class="modal fade" id="delRow" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">DELETE </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/api/customer"  method="DELETE" >
+          {{!-- {{#each selectcustomer}}
+        <div class="form-floating mb-3">
+          <input type="text" readonly class="form-control" id="floatingName" placeholder="name" name="{{this.id}}" value="{{this.customer}}">
+          <label for="floatingName">Customer</label>
+        </div>
+        {{#each selectcustomer}} --}}
+          <button id="liveToastBtn" type="submit" value="Submit"  class="btn btn-primary">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+    <div class="container">
+    <div class="card shadow mx-5 my-5">
+      <div class="card-header py-3">
+        <span>
+          List data Inventory
+        </span>
+<!-- Button trigger modal -->
+        <button type="button"  class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#staticBackdrop">New</button>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table
+            class="table table-bordered table-striped"
+            id="dataTable"
+            width="100%"
+            cellspacing="0"
+          >
+            <thead class="sticky-top top-0 table-dark rounded">
+              <tr>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th class="text-center">Action</th>
+      
+              </tr>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                  <td>{{this.customer}}</td>
+                  <td>{{this.phone}}</td>
+                  <td>{{this.address}}</td>
+                        <td class="text-center">
+                          <div>
+                    <a  href="/api/customer/{{this.id}}" class="mr-3 btn btn-small" type="button" >
+                    <i class="fa fa-cog text-primary"  data-bs-toggle="modal" data-bs-target="#editRow" aria-hidden="true"></i>
+                    </a>
+                    <a  href="/api/customer/del/{{this.id}}" class="mr-3 btn btn-small" type="button" >
+<i class="fa fa-times-circle text-danger" aria-hidden="true"></i>
+                    </a>
+
+                          </div>
+                        </td>
+                </tr>
+                {{/each}}
+            </tbody>
+          
+          </table>
+        </div>
+      </div>
+    </div>
+    </div>
+    {{!-- boostrap js start --}}
+    <script>
+    const toastTrigger = document.getElementById('liveToastBtn')
+const toastLiveExample = document.getElementById('liveToast')
+if (toastTrigger) {
+  toastTrigger.addEventListener('click', () => {
+    const toast = new bootstrap.Toast(toastLiveExample)
+    toast.show()
+  })
+}
+
+    </script>
+    {{!-- boostrap js end --}}
+    {{!-- boostrap js start --}}
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    {{!-- boostrap js end --}}
+  </body>
+</html>
